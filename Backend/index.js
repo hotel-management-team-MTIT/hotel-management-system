@@ -17,11 +17,13 @@ app.use(bodyParser.json());
 // ================= Import Routes =================
 const staffRoutes = require("./Routes/staffRoutes");
 const guestRoutes = require("./Routes/guestRoutes");
+const paymentRoutes = require("./Routes/paymentRoutes");
 const roomRoutes = require("./Routes/roomRoutes");
 
 // ================= Routes =================
 app.use("/api/staff", staffRoutes);
 app.use("/api/guests", guestRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/rooms", roomRoutes);
 
 // ================= Default Route =================
