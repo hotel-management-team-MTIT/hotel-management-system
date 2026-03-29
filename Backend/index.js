@@ -9,42 +9,44 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// ================= Middleware =================
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Import Routes
+// ================= Import Routes =================
 const staffRoutes = require("./Routes/staffRoutes");
 const guestRoutes = require("./Routes/guestRoutes");
 const paymentRoutes = require("./Routes/paymentRoutes");
+const roomRoutes = require("./Routes/roomRoutes");
 
-// Routes
+// ================= Routes =================
 app.use("/api/staff", staffRoutes);
 app.use("/api/guests", guestRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/rooms", roomRoutes);
 
-// Default route
+// ================= Default Route =================
 app.get("/", (req, res) => {
-  res.send("Hotel Management Services (Staff & Guest) are running...");
+  res.send("Hotel Management System API is running...");
 });
 
-// Safety check for environment variables
+// ================= Safety Check =================
 if (!process.env.MONGO_URI || !process.env.PORT) {
-  console.error("Error: MONGO_URI or PORT not found in .env file!");
-  process.exit(1); // Exit the app if variables are missing
+  console.error(" MONGO_URI or PORT missing in .env file!");
+  process.exit(1);
 }
 
-// MongoDB connection and server start
+// ================= MongoDB + Server =================
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected Successfully");
 
     app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
+      console.log(` Server running on http://localhost:${process.env.PORT}`);
     });
   })
   .catch((error) => {
-    console.log("MongoDB Connection Error:", error.message);
+    console.log(" MongoDB Connection Error:", error.message);
   });
